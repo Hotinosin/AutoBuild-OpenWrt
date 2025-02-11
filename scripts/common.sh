@@ -9,6 +9,7 @@ rm_package "*adguardhome"
 rm_package "*advanced"
 rm_package "*alist"
 rm_package "*amlogic"
+rm_package "*argon-config"
 rm_package "*autotimeset"
 rm_package "*bypass"
 rm_package "*ddns-go"
@@ -28,16 +29,19 @@ rm_package "*shadowsocks*"
 rm_package "*smartdns"
 rm_package "*sqm*"
 rm_package "*ssr*"
+rm_package "*theme-argon"
 rm_package "*transmission*"
 rm_package "*trojan*"
 rm_package "*v2ray*"
 rm_package "*xray*"
 rm_package "dnsproxy"
 rm_package "minidlna"
+rm_package "miniupnpc"
 rm_package "miniupnpd"
-rm_package "zerotier"
 
 # 添加package
+git clone -q --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+git clone -q --depth=1 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 git clone -q --depth=1 https://github.com/sbwml/luci-app-alist.git package/alist
 git clone -q --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
 git clone -q --depth=1 https://github.com/sbwml/v2ray-geodata.git package/v2ray-geodata
@@ -71,17 +75,17 @@ git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luc
 git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-sqm
 git_sparse_clone master https://github.com/immortalwrt/packages.git multimedia/minidlna
 git_sparse_clone master https://github.com/immortalwrt/packages.git net/ddns-go
+git_sparse_clone master https://github.com/immortalwrt/packages.git net/miniupnpc
 git_sparse_clone master https://github.com/immortalwrt/packages.git net/miniupnpd
 git_sparse_clone master https://github.com/immortalwrt/packages.git net/smartdns
 git_sparse_clone master https://github.com/immortalwrt/packages.git net/sqm-scripts
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/zerotier
 
 # requires golang latest version
 rm -rf feeds/packages/lang/golang
 git clone -q --depth=1 https://github.com/sbwml/packages_lang_golang.git feeds/packages/lang/golang
 
 # 更改默认主题背景
-cp -f $GITHUB_WORKSPACE/images/bg1.jpg feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
+cp -f ${GITHUB_WORKSPACE}/images/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 # samba解除root限制
 sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
@@ -107,6 +111,15 @@ sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
 sed -i 's|admin/network|admin/control|g' package/luci-app-sqm/root/usr/share/luci/menu.d/*.json
+
+# 修改默认IP和hostname固件信息
+sed -i "s|192\.168\.[0-9]*\.[0-9]*|${OPENWRT_IP}|g" feeds/luci/modules/luci-mod-system/htdocs/luci-static/resources/view/system/flash.js
+sed -i "s|192\.168\.[0-9]*\.[0-9]*|${OPENWRT_IP}|g" package/base-files/files/bin/config_generate
+sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
+sed -i 's/OPENWRT_RELEASE="[^"]*"/OPENWRT_RELEASE="OpenWrt"/' package/base-files/files/usr/lib/os-release
+sed -i "s/DISTRIB_RELEASE='[^']*'/DISTRIB_RELEASE='OpenWrt'/" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='[^']*'/DISTRIB_DESCRIPTION='OpenWrt'/" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_REVISION='[^']*'/DISTRIB_REVISION='R$(TZ=UTC-8 date '+%-m.%-d')'/" package/base-files/files/etc/openwrt_release
 
 # 修改插件名字
 replace_text() {

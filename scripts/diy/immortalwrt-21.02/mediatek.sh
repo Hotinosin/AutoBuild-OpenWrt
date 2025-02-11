@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# 修改默认IP和hostname
-sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
-sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
-
 # 修改opkg源
 echo "src/gz openwrt_kiddin9 https://dl.openwrt.ai/latest/packages/aarch64_cortex-a53/kiddin9" >> package/system/opkg/files/customfeeds.conf
 
-# firewall4的turboacc
+rm_package() {
+    find ./ -maxdepth 4 -iname "$1" -type d | xargs rm -rf || echo -e "\e[31mNot found [$1]\e[0m"
+}
+
+rm_package "zerotier"
+
 git_sparse_clone() {
     branch="$1" repourl="$2" repodir="$3"
     [[ -d "package/cache" ]] && rm -rf package/cache
@@ -18,13 +19,8 @@ git_sparse_clone() {
     echo -e "\e[31mFailed to sparse clone $repodir from $repourl($branch).\e[0m"
 }
 
-git_sparse_clone luci https://github.com/chenmozhijin/turboacc.git luci-app-turboacc
+git_sparse_clone main https://github.com/v8040/openwrt-packages.git zerotier
 
-replace_text() {
-  search_text="$1" new_text="$2"
-  sed -i "s/$search_text/$new_text/g" $(grep "$search_text" -rl ./ 2>/dev/null) || echo -e "\e[31mNot found [$search_text]\e[0m"
-}
-
-replace_text "Turbo ACC 网络加速" "网络加速"
+sed -i 's/services/control/g' package/mtk/applications/luci-app-eqos-mtk/root/usr/share/luci/menu.d/*.json
 
 echo -e "\e[32m$0 [DONE]\e[0m"
