@@ -33,6 +33,7 @@ rm_package "*theme-argon"
 rm_package "*transmission*"
 rm_package "*trojan*"
 rm_package "*v2ray*"
+rm_package "*wechatpush"
 rm_package "*xray*"
 rm_package "dnsproxy"
 rm_package "minidlna"
@@ -49,6 +50,7 @@ git clone -q --depth=1 https://github.com/sirpdboy/luci-app-advanced.git package
 git clone -q --depth=1 https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
 git clone -q --depth=1 https://github.com/sirpdboy/luci-app-partexp.git package/luci-app-partexp
 git clone -q --depth=1 https://github.com/sirpdboy/netspeedtest.git package/luci-app-netspeedtest
+git clone -q --depth=1 https://github.com/tty228/luci-app-wechatpush.git package/luci-app-wechatpush
 git clone -q --depth=1 https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
 
 git_sparse_clone() {

@@ -21,7 +21,7 @@ start_service() {
     if [ -f /etc/config/dnsproxy ]; then
         CMD="$PROG --config-path=$CONF"
     else
-        CMD="$PROG -l 127.0.0.1 -p 5353 -u quic://223.5.5.5 -f quic://94.140.14.140 --refuse-any --edns --cache --cache-optimistic"
+        CMD="$PROG -l 127.0.0.1 -p 5353 -u quic://223.5.5.5 -f https://1.12.12.12/dns-query --refuse-any --edns --cache --cache-optimistic"
         echo "Warning: Configuration file /etc/config/dnsproxy does not exist. Start with default configuration."
     fi
     procd_open_instance
