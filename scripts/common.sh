@@ -10,7 +10,6 @@ rm_package "*advanced"
 rm_package "*alist"
 rm_package "*amlogic"
 rm_package "*argon-config"
-rm_package "*autotimeset"
 rm_package "*bypass"
 rm_package "*ddns-go"
 rm_package "*ddnsto"
@@ -29,6 +28,7 @@ rm_package "*shadowsocks*"
 rm_package "*smartdns"
 rm_package "*sqm*"
 rm_package "*ssr*"
+rm_package "*taskplan"
 rm_package "*theme-argon"
 rm_package "*transmission*"
 rm_package "*trojan*"
@@ -47,8 +47,8 @@ git clone -q --depth=1 https://github.com/sbwml/luci-app-alist.git package/alist
 git clone -q --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
 git clone -q --depth=1 https://github.com/sbwml/v2ray-geodata.git package/v2ray-geodata
 git clone -q --depth=1 https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
-git clone -q --depth=1 https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
 git clone -q --depth=1 https://github.com/sirpdboy/luci-app-partexp.git package/luci-app-partexp
+git clone -q --depth=1 https://github.com/sirpdboy/luci-app-taskplan.git package/luci-app-taskplan
 git clone -q --depth=1 https://github.com/sirpdboy/netspeedtest.git package/luci-app-netspeedtest
 git clone -q --depth=1 https://github.com/tty228/luci-app-wechatpush.git package/luci-app-wechatpush
 git clone -q --depth=1 https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
