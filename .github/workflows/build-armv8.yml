@@ -45,11 +45,11 @@ on:
       openwrt_ip:
         description: "Select default ip"
         required: false
-        default: "10.10.10.1"
+        default: "192.168.10.1"
         type: choice
         options:
-          - 10.10.10.1
-          - 10.10.11.1
+          - 192.168.100.1
+          - 192.168.10.1
 
 env:
   CONFIG_FILE: configs/${{ inputs.source_branch }}/${{ inputs.openwrt_target }}.config
