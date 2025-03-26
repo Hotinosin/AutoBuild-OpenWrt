@@ -87,7 +87,7 @@ rm -rf feeds/packages/lang/golang
 git clone -q --depth=1 https://github.com/sbwml/packages_lang_golang.git feeds/packages/lang/golang
 
 # 更改默认主题背景
-cp -f ${GITHUB_WORKSPACE}/images/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
+cp -f ${GITHUB_WORKSPACE}/images/bg2.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 # samba解除root限制
 #sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
